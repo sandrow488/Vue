@@ -1,7 +1,9 @@
 <template>
-  <button :style="{ color: Bcolor, backgroundImage: Bacolor, backgroundColor: Bbackgroundcolor }">
-    {{ Nboton }}
-  </button>
+  <router-link to="/juego">
+    <button :style="{ color: Bcolor, backgroundImage: Bacolor, backgroundColor: Bbackgroundcolor }">
+      {{ Nboton }}
+    </button></router-link
+  >
 </template>
 
 <style scoped>
@@ -11,10 +13,18 @@ button {
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
-  display: flex;
+
   align-items: center;
   justify-content: center;
   text-align: center;
+  text-decoration: none;
+  color: inherit;
+  text-decoration: none;
+}
+
+button a {
+  color: inherit;
+  text-decoration: none;
 }
 button:hover {
   background-image: linear-gradient(150deg, #6b11cba6, #e0238bb0);

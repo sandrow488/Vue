@@ -77,7 +77,7 @@ import Desafio from '../components/HomeView/Desafio/Desafio.vue'
   text-align: center;
   margin-top: 30px;
   background-color: #9e53ee8a;
-  height: 400px;
+  height: 500px;
   margin-top: 0;
 }
 </style>
