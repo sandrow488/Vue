@@ -1,7 +1,6 @@
 <template>
-  <router-link to="/tabla">
-    <button>Ver Ranking</button>
-  </router-link>
+    <button type="submit">Comenzar juego</button>
+
 </template>
 <style scoped>
 button {
