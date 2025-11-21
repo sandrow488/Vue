@@ -1,0 +1,142 @@
+[
+  {
+    "id": 1,
+    "question": "¿Quién la canta?",
+    "answers": ["Pablo Rubio", "YanBlock", "Anuel AA", "Daddy Yankee"],
+    "correct": "YanBlock",
+    "cancion": "songs/YanBlock.mp3"
+  },
+  {
+    "id": 2,
+    "question": "¿Quién la canta?",
+    "answers": ["Bad Bunny", "J Balvin", "Maluma", "Ozuna"],
+    "correct": "J Balvin",
+    "cancion": "songs/JBalvin.mp3"
+  },
+  {
+    "id": 3,
+    "question": "¿Quién la canta?",
+    "answers": ["Karol G", "Natti Natasha", "Becky G", "Danna Paola"],
+    "correct": "Karol G",
+    "cancion": "songs/KarolG.mp3"
+  },
+  {
+    "id": 4,
+    "question": "¿Quién la canta?",
+    "answers": ["Sech", "Rauw Alejandro", "Feid", "Lunay"],
+    "correct": "Rauw Alejandro",
+    "cancion": "songs/RauwAlejandro.mp3"
+  },
+  {
+    "id": 5,
+    "question": "¿Quién la canta?",
+    "answers": ["Camilo", "Sebastián Yatra", "Luis Fonsi", "Ricardo Arjona"],
+    "correct": "Sebastián Yatra",
+    "cancion": "songs/SebastianYatra.mp3"
+  },
+  {
+    "id": 6,
+    "question": "¿Quién la canta?",
+    "answers": ["Nicky Jam", "Jhay Cortez", "Anuel AA", "Arcángel"],
+    "correct": "Jhay Cortez",
+    "cancion": "songs/JhayCortez.mp3"
+  },
+  {
+    "id": 7,
+    "question": "¿Quién la canta?",
+    "answers": ["Maluma", "Ozuna", "Bad Bunny", "J Balvin"],
+    "correct": "Bad Bunny",
+    "cancion": "songs/BadBunny.mp3"
+  },
+  {
+    "id": 8,
+    "question": "¿Quién la canta?",
+    "answers": ["Dua Lipa", "Rosalía", "Becky G", "Karol G"],
+    "correct": "Rosalía",
+    "cancion": "songs/Rosalia.mp3"
+  },
+  {
+    "id": 9,
+    "question": "¿Quién la canta?",
+    "answers": ["Feid", "Sech", "Lunay", "Rauw Alejandro"],
+    "correct": "Feid",
+    "cancion": "songs/Feid.mp3"
+  },
+  {
+    "id": 10,
+    "question": "¿Quién la canta?",
+    "answers": ["Camilo", "Sebastián Yatra", "Luis Fonsi", "Ricardo Arjona"],
+    "correct": "Luis Fonsi",
+    "cancion": "songs/LuisFonsi.mp3"
+  },
+  {
+    "id": 11,
+    "question": "¿Nombre de la canción?",
+    "answers": ["Sin Pijama", "Mayores", "Mala Fama", "Shaky Shaky"],
+    "correct": "Sin Pijama",
+    "cancion": "songs/BeckyG.mp3"
+  },
+  {
+    "id": 12,
+    "question": "¿Nombre de la canción?",
+    "answers": ["Hasta el Amanecer", "El Perdón", "Travesuras", "X"],
+    "correct": "Hasta el Amanecer",
+    "cancion": "songs/NickyJam.mp3"
+  },
+  {
+    "id": 13,
+    "question": "¿Nombre de la canción?",
+    "answers": ["Se Preparo", "Taki Taki", "Dile Que Tú Me Quieres", "Baila Baila Baila"],
+    "correct": "Se Preparo",
+    "cancion": "songs/Ozuna.mp3"
+  },
+  {
+    "id": 14,
+    "question": "¿Nombre de la canción?",
+    "answers": ["Don't Start Now", "Physical", "Levitating", "New Rules"],
+    "correct": "Don't Start Now",
+    "cancion": "songs/DuaLipa.mp3"
+  },
+  {
+    "id": 15,
+    "question": "¿Nombre de la canción?",
+    "answers": ["Se Preparo", "Taki Taki", "Dile Que Tú Me Quieres", "Baila Baila Baila"],
+    "correct": "Baila Baila Baila",
+    "cancion": "songs/Lunay.mp3"
+  },
+  {
+    "id": 16,
+    "question": "¿Quién la canta?",
+    "answers": ["Camilo", "Sebastián Yatra", "Luis Fonsi", "Ricardo Arjona"],
+    "correct": "Camilo",
+    "cancion": "songs/Camilo.mp3"
+  },
+  {
+    "id": 17,
+    "question": "¿Quién la canta?",
+    "answers": ["Pablo Rubio", "YanBlock", "Anuel AA", "Daddy Yankee"],
+    "correct": "Daddy Yankee",
+    "cancion": "songs/DaddyYankee.mp3"
+  },
+  {
+    "id": 18,
+    "question": "¿Quién la canta?",
+    "answers": ["Bad Bunny", "J Balvin", "Maluma", "Ozuna"],
+    "correct": "Maluma",
+    "cancion": "songs/Maluma.mp3"
+  },
+  {
+    "id": 19,
+    "question": "¿Quién la canta?",
+    "answers": ["Karol G", "Natti Natasha", "Becky G", "Danna Paola"],
+    "correct": "Natti Natasha",
+    "cancion": "songs/NattiNatasha.mp3"
+  },
+  {
+    "id": 20,
+    "question": "¿Quién la canta?",
+    "answers": ["Sech", "Rauw Alejandro", "Feid", "Lunay"],
+    "correct": "Sech",
+    "cancion": "songs/Sech.mp3"
+  }
+]

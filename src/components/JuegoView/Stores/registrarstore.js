@@ -1,10 +1,10 @@
-import { defineStore } from 'pinia';
-import { ref, computed } from 'vue';
+import { defineStore } from 'pinia'
+import { ref } from 'vue'
 
 export const useRegistrarstore = defineStore('registrar', () => {
-    const nombre = ref('');
-    const guardarNombre = (nuevoNombre) => {
-        nombre.value = nuevoNombre;
-    };
-    return { nombre, guardarNombre };
-});
+  const nombre = ref('')
+  const guardarNombre = (nuevoNombre) => {
+    nombre.value = nuevoNombre
+  }
+  return { nombre, guardarNombre }
+})
