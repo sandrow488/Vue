@@ -79,7 +79,7 @@
   {
     "id": 12,
     "question": "¿Nombre de la canción?",
-    "answers": ["Hasta el Amanecer", "El Perdón", "Travesuras", "X"],
+    "answers": ["Hasta el Amanecer", "El Perdón", "Travesuras", "Taki Taki"],
     "correct": "Hasta el Amanecer",
     "cancion": "songs/NickyJam.mp3"
   },
@@ -88,7 +88,7 @@
     "question": "¿Nombre de la canción?",
     "answers": ["Se Preparo", "Taki Taki", "Dile Que Tú Me Quieres", "Baila Baila Baila"],
     "correct": "Se Preparo",
-    "cancion": "songs/Ozuna.mp3"
+    "cancion": "songs/Ozuna2.mp3"
   },
   {
     "id": 14,
@@ -115,8 +115,8 @@
     "id": 17,
     "question": "¿Quién la canta?",
     "answers": ["Pablo Rubio", "YanBlock", "Anuel AA", "Daddy Yankee"],
-    "correct": "Daddy Yankee",
-    "cancion": "songs/DaddyYankee.mp3"
+    "correct": "Anuel AA",
+    "cancion": "songs/AnuelAA.mp3"
   },
   {
     "id": 18,

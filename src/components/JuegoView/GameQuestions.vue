@@ -19,7 +19,7 @@
       </button>
 
       <button class="btn-siguiente" @click="avanzarPregunta">
-        {{ bloqueado ? 'Siguiente Pregunta ➡' : 'Saltar Pregunta ⏭️' }}
+        {{ bloqueado ? 'Siguiente Pregunta ➡' : 'Saltar Pregunta ⏭' }}
       </button>
     </div>
   </div>
