@@ -1,7 +1,18 @@
 <template>
   <div v-if="current" class="question-container">
     <h2>Pregunta {{ store.index + 1 }}</h2>
+    <div class="barra-fondo">
+      <div class="barra-relleno" :class="{ 'animando': estaSonando }"></div>
+    </div>
     <p class="pregunta-texto">{{ current.question }}</p>
+
+    <button 
+      class="btn-repetir" 
+      @click="reproducirAudio" 
+      :disabled="bloqueado"
+    >
+      🔊 Repetir Canción
+    </button>
 
     <div class="options">
       <button
@@ -17,80 +28,83 @@
       >
         {{ option }}
       </button>
-
-      <button class="btn-siguiente" @click="avanzarPregunta">
-        {{ bloqueado ? 'Siguiente Pregunta ➡' : 'Saltar Pregunta ⏭' }}
-      </button>
     </div>
+    
+    <p v-if="bloqueado" class="mensaje-espera">
+      Siguiente pregunta en camino...
+    </p>
   </div>
 </template>
 
 <script setup>
 import { computed, ref, onMounted, onUnmounted } from 'vue'
 import { usePreguntasStore } from '@/components/JuegoView/Stores/Preguntas.js'
-// Importamos nuestras funciones sencillas del archivo externo
 import { reproducirCancion, detenerCancion } from '@/utils/audioService.js'
 
 const store = usePreguntasStore()
-// Obtenemos la pregunta actual basada en el índice del store
 const current = computed(() => store.preguntas[store.index])
 
 const shuffledAnswers = ref([])
 const bloqueado = ref(false)
 const seleccionada = ref(null)
+const estaSonando = ref(false)
 
-// Función auxiliar para mezclar respuestas y preparar la UI
 function prepararPregunta() {
   if (current.value) {
-    // Mezclamos las respuestas
     shuffledAnswers.value = [...current.value.answers].sort(() => Math.random() - 0.5)
-    // Reseteamos el estado visual
     bloqueado.value = false
     seleccionada.value = null
-
-    // REPRODUCIMOS EL AUDIO AQUÍ DIRECTAMENTE
-    reproducirCancion(current.value.cancion)
+    // Reproducir audio automáticamente
+    reproducirAudio()
   }
 }
 
-// 1. Al montar el componente, cargamos la primera pregunta
+function reproducirAudio() {
+  if (current.value) {
+    // 1. Reseteamos la barra (quitamos la clase para que vuelva a 0)
+    estaSonando.value = false
+    
+    // 2. Reproducimos el audio
+    reproducirCancion(current.value.cancion)
+
+    setTimeout(() => {
+      if (!bloqueado.value) {
+        estaSonando.value = true
+      }
+    }, 50)
+  }
+}
+
 onMounted(() => {
   prepararPregunta()
 })
 
-// 2. Al salir del componente, paramos el audio por si acaso
 onUnmounted(() => {
   detenerCancion()
 })
 
-// 3. Lógica para elegir respuesta
 function elegirRespuesta(opcion) {
   if (bloqueado.value) return
 
-  // Paramos la música inmediatamente al responder
+  estaSonando.value = false
+  // 1. Detenemos música y mostramos resultado
   detenerCancion()
-
   bloqueado.value = true
   seleccionada.value = opcion
 
   const esCorrecta = opcion === current.value.correct
   store.respuesta(esCorrecta)
+
+  // 2. Esperamos 2 segundos y avanzamos automáticamente
+  setTimeout(() => {
+    avanzarPregunta()
+  }, 2000)
 }
 
-// 4. Lógica para pasar a la siguiente
 function avanzarPregunta() {
-  // Si el usuario no respondió y le dio a "Saltar", restamos puntos (opcional)
-  // o simplemente paramos la música actual
-  detenerCancion()
-
-  if (!bloqueado.value) {
-    store.respuesta(false) // Penalización por saltar sin responder
-  }
-
-  // Avanzamos el índice en el store
+  estaSonando.value = false
   store.siguientePregunta()
-
-  // Si el juego NO ha acabado, preparamos la siguiente pregunta y audio
+  
   if (!store.acabado) {
     prepararPregunta()
   }
@@ -112,8 +126,32 @@ h2 {
 
 .pregunta-texto {
   font-size: 1.2rem;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   font-weight: bold;
+}
+
+.btn-repetir {
+  background-color: #ff9800;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 16px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: background 0.3s;
+}
+
+.btn-repetir:hover:not(:disabled) {
+  background-color: #e68a00;
+}
+
+.btn-repetir:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
 }
 
 .options {
@@ -138,21 +176,6 @@ h2 {
   border-color: #6a11cb;
 }
 
-.btn-siguiente {
-  padding: 15px;
-  font-size: 18px;
-  background-color: #ff9800;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: bold;
-  margin-top: 10px;
-}
-.btn-siguiente:hover {
-  background-color: #e68a00;
-}
-
 .correct {
   background-color: #4caf50 !important;
   color: white;
@@ -163,5 +186,37 @@ h2 {
   background-color: #f44336 !important;
   color: white;
   border-color: #f44336;
+}
+
+.mensaje-espera {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 15px;
+  font-style: italic;
+}
+
+.barra-fondo {
+  width: 100%;
+  max-width: 600px; /* Mismo ancho que tus preguntas */
+  height: 10px;
+  background-color: #e0e0e0;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  overflow: hidden; /* Para que el relleno no se salga en las esquinas */
+}
+
+/* La barra de color que se mueve */
+.barra-relleno {
+  height: 100%;
+  width: 0%; /* Empieza vacía */
+  background-color: #6a11cb; /* Color morado (o el que prefieras) */
+  border-radius: 5px;
+  transition: none; /* Sin animación cuando reseteamos */
+}
+
+/* Clase que activa la animación */
+.barra-relleno.animando {
+  width: 100%; /* Llega al final */
+  transition: width 5s linear; /* Tarda exactamente 5 segundos */
 }
 </style>
