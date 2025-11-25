@@ -26,99 +26,74 @@
 </template>
 
 <script setup>
-import { computed, ref, watch, onUnmounted } from 'vue'
+import { computed, ref, onMounted, onUnmounted } from 'vue'
 import { usePreguntasStore } from '@/components/JuegoView/Stores/Preguntas.js'
-import { Howl } from 'howler'
+// Importamos nuestras funciones sencillas del archivo externo
+import { reproducirCancion, detenerCancion } from '@/utils/audioService.js'
 
 const store = usePreguntasStore()
+// Obtenemos la pregunta actual basada en el índice del store
 const current = computed(() => store.preguntas[store.index])
-
-let sonido = null
-let audioTimeout = null
-
-const avanzarPregunta = () => {
-  // 1. Limpieza de audio
-  if (sonido) {
-    sonido.stop()
-    sonido.unload()
-  }
-  if (audioTimeout) clearTimeout(audioTimeout)
-
-  // 2. Lógica de puntos:
-  if (!bloqueado.value) {
-    store.respuesta(false)
-  }
-
-  // 3. Avanzamos manualmente (ya que lo quitamos del store)
-  store.siguientePregunta()
-}
-
-watch(
-  current,
-  (nuevaPregunta) => {
-    if (!nuevaPregunta) return
-
-    if (sonido) sonido.stop()
-    if (audioTimeout) clearTimeout(audioTimeout)
-
-    sonido = new Howl({
-      src: [`/${nuevaPregunta.cancion}`],
-      html5: true,
-      volume: 0.5,
-      onload: function () {
-        const duracion = this.duration()
-        const maxInicio = Math.max(0, duracion - 5)
-        const inicioRandom = Math.random() * maxInicio
-        this.seek(inicioRandom)
-      },
-    })
-
-    sonido.play()
-
-    // Solo paramos el audio a los 5s
-    audioTimeout = setTimeout(() => {
-      if (sonido) sonido.stop()
-    }, 5000)
-  },
-  { immediate: true },
-)
-
-onUnmounted(() => {
-  if (sonido) {
-    sonido.stop()
-    sonido.unload()
-  }
-  if (audioTimeout) clearTimeout(audioTimeout)
-})
 
 const shuffledAnswers = ref([])
 const bloqueado = ref(false)
 const seleccionada = ref(null)
 
-watch(
-  current,
-  (nuevaPregunta) => {
-    if (nuevaPregunta) {
-      shuffledAnswers.value = [...nuevaPregunta.answers].sort(() => Math.random() - 0.5)
-      bloqueado.value = false
-      seleccionada.value = null
-    }
-  },
-  { immediate: true },
-)
+// Función auxiliar para mezclar respuestas y preparar la UI
+function prepararPregunta() {
+  if (current.value) {
+    // Mezclamos las respuestas
+    shuffledAnswers.value = [...current.value.answers].sort(() => Math.random() - 0.5)
+    // Reseteamos el estado visual
+    bloqueado.value = false
+    seleccionada.value = null
 
+    // REPRODUCIMOS EL AUDIO AQUÍ DIRECTAMENTE
+    reproducirCancion(current.value.cancion)
+  }
+}
+
+// 1. Al montar el componente, cargamos la primera pregunta
+onMounted(() => {
+  prepararPregunta()
+})
+
+// 2. Al salir del componente, paramos el audio por si acaso
+onUnmounted(() => {
+  detenerCancion()
+})
+
+// 3. Lógica para elegir respuesta
 function elegirRespuesta(opcion) {
   if (bloqueado.value) return
+
+  // Paramos la música inmediatamente al responder
+  detenerCancion()
 
   bloqueado.value = true
   seleccionada.value = opcion
 
   const esCorrecta = opcion === current.value.correct
-
-  if (sonido) sonido.stop()
-  if (audioTimeout) clearTimeout(audioTimeout)
-
   store.respuesta(esCorrecta)
+}
+
+// 4. Lógica para pasar a la siguiente
+function avanzarPregunta() {
+  // Si el usuario no respondió y le dio a "Saltar", restamos puntos (opcional)
+  // o simplemente paramos la música actual
+  detenerCancion()
+
+  if (!bloqueado.value) {
+    store.respuesta(false) // Penalización por saltar sin responder
+  }
+
+  // Avanzamos el índice en el store
+  store.siguientePregunta()
+
+  // Si el juego NO ha acabado, preparamos la siguiente pregunta y audio
+  if (!store.acabado) {
+    prepararPregunta()
+  }
 }
 </script>
 
