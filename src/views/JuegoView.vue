@@ -13,12 +13,10 @@ onMounted(() => {
 })
 </script>
 <template>
- <div class="juego-view">
-    
+  <div class="juego-view">
     <Nombre v-if="!registrarStore.nombre" />
 
     <div v-else>
-      
       <div v-if="!preguntasStore.acabado">
         <h1>Jugando: {{ registrarStore.nombre }}</h1>
         <p>Puntos: {{ preguntasStore.puntaje }}</p>
@@ -29,10 +27,9 @@ onMounted(() => {
         <h1>¡Juego Terminado!</h1>
         <p>Tu puntuación final es: {{ preguntasStore.puntaje }}</p>
         <router-link to="/">
-            <button class="btn-volver">Volver al Inicio</button>
+          <button class="btn-volver">Volver al Inicio</button>
         </router-link>
       </div>
-
     </div>
   </div>
 </template>
@@ -40,7 +37,7 @@ onMounted(() => {
 .juego-view {
   text-align: center;
   padding: 20px;
-  min-height: 60vh; /* Para que no quede pegado arriba */
+  min-height: 60vh;
 }
 
 .resultado-final {
@@ -48,7 +45,7 @@ onMounted(() => {
   background-color: white;
   padding: 40px;
   border-radius: 15px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   display: inline-block;
 }
 

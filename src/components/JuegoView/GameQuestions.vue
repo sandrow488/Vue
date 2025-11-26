@@ -2,17 +2,11 @@
   <div v-if="current" class="question-container">
     <h2>Pregunta {{ store.index + 1 }}</h2>
     <div class="barra-fondo">
-      <div class="barra-relleno" :class="{ 'animando': estaSonando }"></div>
+      <div class="barra-relleno" :class="{ animando: estaSonando }"></div>
     </div>
     <p class="pregunta-texto">{{ current.question }}</p>
 
-    <button 
-      class="btn-repetir" 
-      @click="reproducirAudio" 
-      :disabled="bloqueado"
-    >
-      🔊 Repetir Canción
-    </button>
+    <button class="btn-repetir" @click="reproducirAudio" :disabled="bloqueado">Repetir</button>
 
     <div class="options">
       <button
@@ -29,10 +23,8 @@
         {{ option }}
       </button>
     </div>
-    
-    <p v-if="bloqueado" class="mensaje-espera">
-      Siguiente pregunta en camino...
-    </p>
+
+    <p v-if="bloqueado" class="mensaje-espera">Siguiente pregunta en camino...</p>
   </div>
 </template>
 
@@ -54,17 +46,15 @@ function prepararPregunta() {
     shuffledAnswers.value = [...current.value.answers].sort(() => Math.random() - 0.5)
     bloqueado.value = false
     seleccionada.value = null
-    // Reproducir audio automáticamente
+
     reproducirAudio()
   }
 }
 
 function reproducirAudio() {
   if (current.value) {
-    // 1. Reseteamos la barra (quitamos la clase para que vuelva a 0)
     estaSonando.value = false
-    
-    // 2. Reproducimos el audio
+
     reproducirCancion(current.value.cancion)
 
     setTimeout(() => {
@@ -87,7 +77,7 @@ function elegirRespuesta(opcion) {
   if (bloqueado.value) return
 
   estaSonando.value = false
-  // 1. Detenemos música y mostramos resultado
+
   detenerCancion()
   bloqueado.value = true
   seleccionada.value = opcion
@@ -95,7 +85,6 @@ function elegirRespuesta(opcion) {
   const esCorrecta = opcion === current.value.correct
   store.respuesta(esCorrecta)
 
-  // 2. Esperamos 2 segundos y avanzamos automáticamente
   setTimeout(() => {
     avanzarPregunta()
   }, 2000)
@@ -104,8 +93,9 @@ function elegirRespuesta(opcion) {
 function avanzarPregunta() {
   estaSonando.value = false
   store.siguientePregunta()
-  
-  if (!store.acabado) {
+  if (store.acabado) {
+    saveScore(registro.nombre, store.puntaje)
+  } else {
     prepararPregunta()
   }
 }
@@ -131,7 +121,7 @@ h2 {
 }
 
 .btn-repetir {
-  background-color: #ff9800;
+  background-color: #3395c2;
   color: white;
   border: none;
   border-radius: 20px;
