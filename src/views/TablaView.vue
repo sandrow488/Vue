@@ -22,7 +22,7 @@ onMounted(() => {
     <p class="subtitulo">Los mejores jugadores del Ranking Musical</p>
 
     <div v-if="listaRanking.length === 0" class="sin-datos">
-      <p>🕸️ Aún no hay registros. ¡Juega una partida para estrenar la tabla!</p>
+      <p>Aún no hay registros. ¡Juega una partida para estrenar la tabla!</p>
       <router-link to="/juego" class="btn-accion">Ir a Jugar</router-link>
     </div>
 

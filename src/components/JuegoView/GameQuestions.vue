@@ -31,9 +31,12 @@
 <script setup>
 import { computed, ref, onMounted, onUnmounted } from 'vue'
 import { usePreguntasStore } from '@/components/JuegoView/Stores/Preguntas.js'
+import { useRegistrarstore } from '@/components/JuegoView/Stores/registrarstore.js'
+import { saveScore } from '@/components/TablaView/Ranking.js'
 import { reproducirCancion, detenerCancion } from '@/utils/audioService.js'
 
 const store = usePreguntasStore()
+const registrarStore = useRegistrarstore()
 const current = computed(() => store.preguntas[store.index])
 
 const shuffledAnswers = ref([])
@@ -94,7 +97,7 @@ function avanzarPregunta() {
   estaSonando.value = false
   store.siguientePregunta()
   if (store.acabado) {
-    saveScore(registro.nombre, store.puntaje)
+    saveScore(registrarStore.nombre, store.puntaje)
   } else {
     prepararPregunta()
   }

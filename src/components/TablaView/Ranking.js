@@ -1,5 +1,6 @@
 let ranking = []
 const RANKING_KEY = 'rankingJuego'
+
 export function getRanking() {
   const almacenarRanking = localStorage.getItem(RANKING_KEY)
   if (almacenarRanking) {
@@ -9,13 +10,26 @@ export function getRanking() {
   }
   return ranking
 }
+
 export function saveScore(name, score) {
+  // Aseguramos tener la lista actualizada antes de agregar
   getRanking()
-  const nuevoranking = { name, score, date: new Date().toISOString() }
+
+  // CORRECCIÓN: Usamos las claves que espera TablaView (nombre, puntos, fecha)
+  const nuevoranking = {
+    nombre: name,
+    puntos: score,
+    fecha: new Date().toLocaleDateString(), // Formato de fecha legible
+  }
+
   ranking.push(nuevoranking)
-  ranking.sort((a, b) => b.score - a.score)
+
+  // Ordenamos por puntos de mayor a menor
+  ranking.sort((a, b) => b.puntos - a.puntos)
+
   if (ranking.length > 10) {
     ranking = ranking.slice(0, 10)
   }
+
   localStorage.setItem(RANKING_KEY, JSON.stringify(ranking))
 }
