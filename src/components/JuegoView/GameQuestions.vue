@@ -91,7 +91,7 @@ function avanzarPregunta() {
   if (!store.acabado) {
     prepararPregunta()
   }
-  // Eliminamos la llamada a saveScore aquí
+
 }
 </script>
 

@@ -21,42 +21,42 @@
 </template>
 
 <style scoped>
-/* Contenedor principal que pone los elementos lado a lado */
+
 .container {
-  display: flex; /* Activa el modo flexible */
-  align-items: center; /* Centra verticalmente (GIF y texto alineados al centro) */
-  justify-content: center; /* Centra el bloque en la pantalla */
-  gap: 40px; /* Espacio entre el GIF y el Texto */
-  max-width: 900px; /* Ancho máximo para que no se estire demasiado */
-  margin: 50px auto; /* Margen superior/inferior y centrado horizontal */
-  padding: 0 20px; /* Un poco de relleno a los lados */
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+  gap: 40px; 
+  max-width: 900px;
+  margin: 50px auto; 
+  padding: 0 20px;
 }
 
 .GIF {
-  flex: 0 0 auto; /* El GIF no se estira ni se encoge, mantiene su tamaño */
+  flex: 0 0 auto;
 }
 
-/* Estilos del Iframe (El círculo) */
+
 iframe {
   display: block;
-  width: 200px; /* Tamaño ajustado un poco más grande para que luzca */
+  width: 200px;
   height: 200px;
-  border-radius: 50%; /* 50% asegura que sea un círculo perfecto */
-  border: none; /* Quitamos bordes feos si los hubiera */
+  border-radius: 50%;
+  border: none;
   object-fit: cover;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Sombra suave estética */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
 .Texto {
-  flex: 1; /* El texto ocupa el espacio restante */
-  text-align: left; /* Texto alineado a la izquierda para mejor lectura lateral */
+  flex: 1; 
+  text-align: left; 
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
 h2 {
-  font-size: 28px; /* Un poco más grande para destacar */
+  font-size: 28px;
   font-weight: 700;
   margin-bottom: 15px;
   color: rgba(207, 12, 126, 0.9);
@@ -66,8 +66,8 @@ h2 {
 p {
   font-size: 18px;
   line-height: 1.6;
-  color: #333; /* Color de texto base para lectura */
+  color: #333;
   margin: 0;
-  width: 100%; /* Quitamos el 30% fijo, ahora usa el espacio flexible */
+  width: 100%; 
 }
 </style>

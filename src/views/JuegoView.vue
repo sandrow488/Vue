@@ -1,42 +1,19 @@
 <script setup>
-import { onMounted, computed, ref, watch } from 'vue'
+import { onMounted, computed, ref } from 'vue' 
 import Nombre from '@/components/JuegoView/Nombre.vue'
 import GameQuestions from '@/components/JuegoView/GameQuestions.vue'
 import { useRegistrarstore } from '@/components/JuegoView/Stores/registrarstore'
 import { usePreguntasStore } from '@/components/JuegoView/Stores/Preguntas'
-import { getRanking } from '@/components/TablaView/Ranking.js'
+
 
 const registrarStore = useRegistrarstore()
 const preguntasStore = usePreguntasStore()
 
-const posicionRanking = ref('-')
 
 onMounted(() => {
   preguntasStore.cargarPreguntas()
 })
 
-watch(
-  () => preguntasStore.acabado,
-  (estaAcabado) => {
-    if (estaAcabado) {
-      calcularPosicion()
-    }
-  }
-)
-
-function calcularPosicion() {
-  setTimeout(() => {
-    const ranking = getRanking()
-    const index = ranking.findIndex(
-      (r) => r.nombre === registrarStore.nombre && r.puntos === preguntasStore.puntaje
-    )
-    if (index !== -1) {
-      posicionRanking.value = `#${index + 1}`
-    } else {
-      posicionRanking.value = '-'
-    }
-  }, 100)
-}
 
 const totalPreguntas = computed(() => preguntasStore.preguntas.length)
 const porcentaje = computed(() => {
@@ -81,10 +58,7 @@ function volverAJugar() {
             <span class="label">Puntos</span>
             <span class="valor principal">{{ preguntasStore.puntaje }}</span>
           </div>
-          <div class="stat-box">
-            <span class="label">Ranking</span>
-            <span class="valor">{{ posicionRanking }}</span>
-          </div>
+          
           <div class="stat-box">
             <span class="label">Aciertos</span>
             <span class="valor">{{ preguntasStore.aciertos }}/{{ totalPreguntas }}</span>
@@ -123,7 +97,6 @@ function volverAJugar() {
   max-width: 600px;
 }
 
-
 .header-juego {
   display: flex;
   justify-content: space-between;
@@ -139,7 +112,6 @@ function volverAJugar() {
 .puntos-live {
   color: #6a11cb;
 }
-
 
 .tarjeta-final {
   background: white;
@@ -162,12 +134,15 @@ function volverAJugar() {
   font-size: 1.1rem;
 }
 
-
 .stats-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 15px;
   margin: 30px 0;
+}
+
+.stats-grid .stat-box:last-child {
+  grid-column: 1 / -1;
 }
 
 .stat-box {
@@ -197,7 +172,6 @@ function volverAJugar() {
   color: #e0238c;
   font-size: 1.8rem;
 }
-
 
 .acciones {
   display: flex;

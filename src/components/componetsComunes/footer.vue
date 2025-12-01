@@ -2,27 +2,19 @@
   <footer class="footer-musical">
     <div class="contenido-footer">
       <div class="columna">
-        <h3>🎵 Desafío Musical</h3>
+        <h3>Concursillo Musical </h3>
         <p>Demuestra lo que sabes y sube al ranking.</p>
       </div>
 
       <div class="columna">
         <h4>Explorar</h4>
         <ul>
-          <li><a href="#">Home</a></li>
-          <li><a href="#">Juego</a></li>
-          <li><a href="#">Ranking</a></li>
+          <li><router-link to= "/">Home</router-link></li>
+          <li><router-link to= "/juego">Juego</router-link></li>  
+          <li><router-link to= "/tabla">Ranking</router-link></li>
         </ul>
       </div>
 
-      <div class="columna">
-        <h4>Síguenos</h4>
-        <div class="redes">
-          <a href="#">Instagram</a>
-          <a href="#">Twitter</a>
-          <a href="#">Discord</a>
-        </div>
-      </div>
     </div>
 
     <div class="barra-inferior">
@@ -32,12 +24,12 @@
 </template>
 
 <style scoped>
-/* Contenedor principal */
+
 .footer-musical {
-  background-color: #1a1a2e; /* Un azul muy oscuro, casi negro */
+  background-color: #1a1a2e;
   color: #ffffff;
   padding: 40px 20px 20px;
-  margin-top: auto; /* Empuja el footer al fondo si usas flex en el padre */
+  margin-top: auto; 
   font-family: sans-serif;
 }
 
@@ -50,7 +42,6 @@
   gap: 30px;
 }
 
-/* Columnas */
 .columna {
   flex: 1;
   min-width: 200px;
@@ -58,12 +49,11 @@
 
 .columna h3 {
   margin-top: 0;
-  color: #e0238b; /* Tu color rosado de marca */
+  color: #e0238b; 
 }
-
 .columna h4 {
   margin-bottom: 15px;
-  border-bottom: 2px solid #6b11cb; /* Tu color morado de marca */
+  border-bottom: 2px solid #6b11cb;
   display: inline-block;
   padding-bottom: 5px;
 }
@@ -74,7 +64,6 @@
   line-height: 1.5;
 }
 
-/* Listas y Enlaces */
 ul {
   list-style: none;
   padding: 0;
@@ -90,7 +79,7 @@ a {
   transition: color 0.3s ease;
 }
 
-/* Efecto Hover: Se ilumina con tu color principal */
+
 a:hover {
   color: #e0238b;
   text-shadow: 0 0 8px rgba(224, 35, 139, 0.4);
@@ -102,7 +91,7 @@ a:hover {
   gap: 10px;
 }
 
-/* Barra inferior de copyright */
+
 .barra-inferior {
   text-align: center;
   margin-top: 40px;
