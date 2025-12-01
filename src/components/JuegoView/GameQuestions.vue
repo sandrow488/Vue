@@ -6,8 +6,6 @@
     </div>
     <p class="pregunta-texto">{{ current.question }}</p>
 
-    <button class="btn-repetir" @click="reproducirAudio" :disabled="bloqueado">Repetir</button>
-
     <div class="options">
       <button
         v-for="option in shuffledAnswers"
@@ -31,12 +29,9 @@
 <script setup>
 import { computed, ref, onMounted, onUnmounted } from 'vue'
 import { usePreguntasStore } from '@/components/JuegoView/Stores/Preguntas.js'
-import { useRegistrarstore } from '@/components/JuegoView/Stores/registrarstore.js'
-import { saveScore } from '@/components/TablaView/Ranking.js'
 import { reproducirCancion, detenerCancion } from '@/utils/audioService.js'
 
 const store = usePreguntasStore()
-const registrarStore = useRegistrarstore()
 const current = computed(() => store.preguntas[store.index])
 
 const shuffledAnswers = ref([])
@@ -49,7 +44,6 @@ function prepararPregunta() {
     shuffledAnswers.value = [...current.value.answers].sort(() => Math.random() - 0.5)
     bloqueado.value = false
     seleccionada.value = null
-
     reproducirAudio()
   }
 }
@@ -57,7 +51,6 @@ function prepararPregunta() {
 function reproducirAudio() {
   if (current.value) {
     estaSonando.value = false
-
     reproducirCancion(current.value.cancion)
 
     setTimeout(() => {
@@ -80,7 +73,6 @@ function elegirRespuesta(opcion) {
   if (bloqueado.value) return
 
   estaSonando.value = false
-
   detenerCancion()
   bloqueado.value = true
   seleccionada.value = opcion
@@ -96,11 +88,10 @@ function elegirRespuesta(opcion) {
 function avanzarPregunta() {
   estaSonando.value = false
   store.siguientePregunta()
-  if (store.acabado) {
-    saveScore(registrarStore.nombre, store.puntaje)
-  } else {
+  if (!store.acabado) {
     prepararPregunta()
   }
+  // Eliminamos la llamada a saveScore aquí
 }
 </script>
 
@@ -121,30 +112,6 @@ h2 {
   font-size: 1.2rem;
   margin-bottom: 10px;
   font-weight: bold;
-}
-
-.btn-repetir {
-  background-color: #3395c2;
-  color: white;
-  border: none;
-  border-radius: 20px;
-  padding: 8px 16px;
-  margin-bottom: 20px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  transition: background 0.3s;
-}
-
-.btn-repetir:hover:not(:disabled) {
-  background-color: #e68a00;
-}
-
-.btn-repetir:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
 }
 
 .options {
@@ -190,26 +157,24 @@ h2 {
 
 .barra-fondo {
   width: 100%;
-  max-width: 600px; /* Mismo ancho que tus preguntas */
+  max-width: 600px;
   height: 10px;
   background-color: #e0e0e0;
   border-radius: 5px;
   margin-bottom: 20px;
-  overflow: hidden; /* Para que el relleno no se salga en las esquinas */
+  overflow: hidden;
 }
 
-/* La barra de color que se mueve */
 .barra-relleno {
   height: 100%;
-  width: 0%; /* Empieza vacía */
-  background-color: #6a11cb; /* Color morado (o el que prefieras) */
+  width: 0%;
+  background-color: #6a11cb;
   border-radius: 5px;
-  transition: none; /* Sin animación cuando reseteamos */
+  transition: none;
 }
 
-/* Clase que activa la animación */
 .barra-relleno.animando {
-  width: 100%; /* Llega al final */
-  transition: width 5s linear; /* Tarda exactamente 5 segundos */
+  width: 100%;
+  transition: width 5s linear;
 }
 </style>
