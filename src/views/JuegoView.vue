@@ -1,19 +1,26 @@
 <script setup>
-import { onMounted, computed, ref } from 'vue' 
+import { onMounted, computed, watch } from 'vue'
 import Nombre from '@/components/JuegoView/Nombre.vue'
 import GameQuestions from '@/components/JuegoView/GameQuestions.vue'
 import { useRegistrarstore } from '@/components/JuegoView/Stores/registrarstore'
 import { usePreguntasStore } from '@/components/JuegoView/Stores/Preguntas'
-
+import { saveScore } from '@/components/TablaView/Ranking.js'
 
 const registrarStore = useRegistrarstore()
 const preguntasStore = usePreguntasStore()
-
 
 onMounted(() => {
   preguntasStore.cargarPreguntas()
 })
 
+watch(
+  () => preguntasStore.acabado,
+  (nuevoValor) => {
+    if (nuevoValor) {
+      saveScore(registrarStore.nombre, preguntasStore.puntaje)
+    }
+  },
+)
 
 const totalPreguntas = computed(() => preguntasStore.preguntas.length)
 const porcentaje = computed(() => {
@@ -58,7 +65,7 @@ function volverAJugar() {
             <span class="label">Puntos</span>
             <span class="valor principal">{{ preguntasStore.puntaje }}</span>
           </div>
-          
+
           <div class="stat-box">
             <span class="label">Aciertos</span>
             <span class="valor">{{ preguntasStore.aciertos }}/{{ totalPreguntas }}</span>
@@ -70,13 +77,9 @@ function volverAJugar() {
         </div>
 
         <div class="acciones">
-          <button @click="volverAJugar" class="btn-primary">
-            Jugar de nuevo
-          </button>
-          
-          <router-link to="/" class="link-secundario">
-            Volver al inicio
-          </router-link>
+          <button @click="volverAJugar" class="btn-primary">Jugar de nuevo</button>
+
+          <router-link to="/" class="link-secundario"> Volver al inicio </router-link>
         </div>
       </div>
     </div>
@@ -103,7 +106,7 @@ function volverAJugar() {
   padding: 15px 20px;
   background: white;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   margin-bottom: 20px;
   font-weight: bold;
   color: #555;
@@ -118,7 +121,7 @@ function volverAJugar() {
   border-radius: 20px;
   padding: 40px;
   text-align: center;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .encabezado-final h2 {
